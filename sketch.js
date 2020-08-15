@@ -1,46 +1,70 @@
-var paper,dustbin;
+
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
-
+const Render = Matter.Render;
+var dustbinObj, paperObject,groundObject	
+var world;
 
 
 function setup() {
-	createCanvas(800, 700);
+	createCanvas(1600, 700);
+	rectMode(CENTER);
+
 
 	engine = Engine.create();
 	world = engine.world;
+	
+	paperObject=new paper(200,450,70);
+	groundObject=new ground(width/2,670,width,20);
+	dustbinObj=new dustbin(1200,650);
+	//Create a Ground
+	
 
-	paper = new Paper(100,590);
-	dustbin = new Dustbin(600,590);
-
-	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
- 	World.add(world, ground);
-
+	var render = Render.create({
+	  element: document.body,
+	  engine: engine,
+	  options: {
+	    width: 1600,
+	    height: 700,
+	    wireframes: false
+	  }
+	});
 
 	Engine.run(engine);
+	Render.run(render);
   
 }
 
 
 function draw() {
   rectMode(CENTER);
-  background(105);
-  dustbin.display();
-  paper.display();
-
+  background(230);
+ 
+  
+  paperObject.display();
+  groundObject.display();
+  dustbinObj.display();
 
   
-  drawSprites();
+  
+ 
+  
+  
  
 }
 
 function keyPressed() {
-if (keyCode === UP_ARROW) {
-	Matter.Body.applyForce(paper.body,paper.body.position,{x:750,y:-800});
+  	if (keyCode === UP_ARROW) {
+
+    	Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:130,y:-145});
+
+    
+  	}
 }
-}
+
+
 
 
 
